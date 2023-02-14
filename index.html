@@ -2,11 +2,24 @@
 <html>
 <head>
 	<title>YouTube Downloader</title>
+	<script src="https://cdn.jsdelivr.net/npm/youtube-dl-interactive@1.4.1/dist/index.js"></script>
 </head>
 <body>
-	<form action="download.php" method="post">
-		<input type="text" name="url" placeholder="Enter YouTube video URL">
-		<button type="submit">Download</button>
-	</form>
+	<div id="container"></div>
+	<script>
+		const container = document.getElementById('container');
+		const downloader = new YoutubeDLInteractive({
+			container,
+			templates: {
+				main: '<input type="text" placeholder="Enter YouTube video URL"><button>Download</button>'
+			},
+			events: {
+				download: (url, options) => {
+					options.format = 'bestvideo[height<=1080]+bestaudio/best';
+					options.outtmpl = 'video.mp4';
+				}
+			}
+		});
+	</script>
 </body>
 </html>
